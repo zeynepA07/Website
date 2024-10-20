@@ -6,7 +6,7 @@ nav ul{
     top: 0;
     width: 100%;
     display: flex;
-    background-color: #996633;
+    background-color: #561C24;
     position: fixed;
     position: -webkit-sticky; /*For Safari*/
     position: sticky;
@@ -14,21 +14,69 @@ nav ul{
 
 nav li {
     flex: 1;
-    border-left: 2px solid #ffffff;
+    border: 2px solid #a7835b;
 }
 
 nav li a{
     display: block;
-    color: #ffffff;
+    color: #F5F5DC;
     text-align: center;
     padding: 14px 16px;
-    text-decoration: none;
+    text-decoration: none; /*This removes the underline of the anchor*/
+    font-weight: bold;
 }
 
 .activePage{
-    background-color: #009999;
+    background-color: #a0917f;
 }
 
 nav li a:hover:not(.activePage){
-    background-color: #00ccff;
+    background-color: #7c4149;
+}
+
+img{
+    height: 300px;
+    width: 500px;
+}
+
+body{
+    font-family: Garamond, Serif;
+    background-color: #E8D8C4;
+}
+
+h1{
+    font-size: 30px;
+    color: #3C3D37;
+}
+
+p{
+    font-size: 18px;
+    color: #3C3D37;
+}
+
+a{
+    font-size: 18px;
+    color: #a7835b;
+}
+
+footer{
+    display: flex;
+    justify-content: space-between;
+    background-color: #561C24;
+    padding: 10px;
+}
+
+footer p{
+    font-size: 18px;
+    color: #cfa87b;
+}
+
+.leftDiv{
+    flex: 1;
+}
+
+.rightDiv{
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
 }

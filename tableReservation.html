@@ -1,25 +1,67 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Restaurant</title>
+    <title>Zeynep's Restaurant</title>
     <link rel="stylesheet" href="style.css">
     <script src="app.js"></script>
 </head>
 
 <body>
 
-<nav>
-    <ul>
-        <li><a href="homepage.html">Homepage</a></li>
-        <li><a class="activePage" href="tableReservation">Table Reservation</a></li>
-        <li><a href="guestListLogin.html">Guest List Login</a></li>
-    </ul>
-    </nav>
+    <nav>
+        <ul>
+            <li><a href="homepage.html">Homepage</a></li>
+            <li><a class="activePage" href="tableReservation.html">Table Reservation</a></li>
+            <li><a href="guestListLogin.html">Guest List Login</a></li>
+        </ul>
+        </nav>
+
+    <h1>Table Reservation - form</h1>
+
+    <form>
+        <label for="firstName">First Name*:</label>
+        <input type="text" id="firstName" name="firstName" maxlength="30" required>
+        
+        <br><br>
+
+        <label for="lastName">Last Name*:</label>
+        <input type="text" id="lastName" name="lastName" maxlength="30" required>
+
+        <br><br>
+
+        <label for="emailAddress">Email Address*:</label>
+        <input type="'email" id="emailAddress" name="emailAddress" maxlength="320" required>
+
+        <br><br>
+
+        <label for="numberOfPeople">Number of People*:</label>
+        <input type="number" id="numberOfPeople" name="numberOfPeople" min="1" max="4" required>
+
+        <br><br>
+
+        <label for="dateOfReservation">Date*:</label>
+        <input type="date" id="dateOfReservation" name="dateOfReservation" required>
+
+        <br><br>
+
+        <input type="submit" value="Find Table">
+
+        <br><br>
+
+    </form>
 
 
 </body>
 
 <footer>
-
-</footer>
+    <div class="leftDiv">
+        <p><b>Phone Number:</b>
+        <br> 0123456789</p>
+    </div>
+    
+    <div class="rightDiv">
+        <p><b>Email Address:</b>
+        <br>ZeynepsRestaurant@gmail.com</p>
+    </div>
+    </footer>
 </html>
