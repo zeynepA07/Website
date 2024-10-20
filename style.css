@@ -1,0 +1,34 @@
+nav ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    top: 0;
+    width: 100%;
+    display: flex;
+    background-color: #996633;
+    position: fixed;
+    position: -webkit-sticky; /*For Safari*/
+    position: sticky;
+}
+
+nav li {
+    flex: 1;
+    border-left: 2px solid #ffffff;
+}
+
+nav li a{
+    display: block;
+    color: #ffffff;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.activePage{
+    background-color: #009999;
+}
+
+nav li a:hover:not(.activePage){
+    background-color: #00ccff;
+}
