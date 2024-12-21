@@ -2,6 +2,9 @@
 include 'DBconnection.php';
 session_start();
 
+$_SESSION['timeout'] = time();
+$_SESSION['timeout_duration'] = 3600;
+
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
     $staffUsername = $_POST['staffUsername'];
     $staffPassword = $_POST['staffPassword'];

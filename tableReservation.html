@@ -18,7 +18,9 @@
 
     <h1>Table Reservation - form</h1>
 
-    <form action="php/reservationHandling.php" method="POST">
+    <form action="php/reservationHandler.php" method="POST">
+        <input type="hidden" name="action" value="handleReservation">
+
         <label for="firstName">First Name*:</label>
         <input type="text" id="firstName" name="firstName" maxlength="30" required>
         
