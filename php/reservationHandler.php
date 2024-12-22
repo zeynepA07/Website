@@ -1,12 +1,12 @@
 <?php
 include 'DBconnection.php';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 
     if (isset($_POST['action'])) {
         $action = $_POST['action'];
 
-        if ($action === 'checkAvailability') {
+        if ($action === 'checkAvailability'){
     
             $dateOfReservation = $_POST['dateOfReservation'];
 
@@ -19,8 +19,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $allTimeSlots = ['09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00'];
                 $availableTimeSlots = array_diff($allTimeSlots, $unavailableTimeSlots);
 
-                echo json_encode($availableTimeSlots);
-            } catch (PDOException $e) {
+
+                session_start();
+                $_SESSION['availableTimeSlots'] = $availableTimeSlots;
+                $_SESSION['reservationData'] = $_POST;
+                header("Location: selectTimeslot.php");
+                exit;
+               
+            } catch (PDOException $e){
                 echo "Error: " . $e->getMessage();
             }
         } elseif ($action === 'handleReservation') {
@@ -41,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 exit();
             }
 
-            if ($numberOfPeople < 1 || $numberOfPeople > 4) {
+            if ($numberOfPeople < 1 || $numberOfPeople > 4){
                 echo "Number of people must be between 1 and 4.";
                 exit();
             }
@@ -59,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     ':timeSlot' => $timeSlot,
                 ]);
                 echo "Reservation successful.";
-            } catch (PDOException $e) {
+            } catch (PDOException $e){
                 echo "Error: " . $e->getMessage();
             }
         } else {
