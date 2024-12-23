@@ -42,6 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
                 exit();
             }
 
+            $emailAddress = trim($_POST['emailAddress']);
             if (!filter_var($emailAddress, FILTER_VALIDATE_EMAIL)) {
                 echo "Invalid email format.";
                 exit();

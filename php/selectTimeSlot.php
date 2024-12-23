@@ -23,11 +23,11 @@ $reservationData = $_SESSION['reservationData'];
 
     <form action="reservationHandler.php" method="POST">
         <input type="hidden" name="action" value="handleReservation">
-        <input type="hidden" name="firstName" value="<?php echo htmlspecialchars ($reesrvationData['firstName']); ?>">
-        <input type="hidden" name="lastName" value="<?php echo htmlspecialchars ($reesrvationData['lastName']); ?>">
-        <input type="hidden" name="emailAddress" value="<?php echo htmlspecialchars ($reesrvationData['emailAddress']); ?>">
-        <input type="hidden" name="numberOfPeople" value="<?php echo htmlspecialchars ($reesrvationData['numberOfPeople']); ?>">
-        <input type="hidden" name="dateOfReservation" value="<?php echo htmlspecialchars ($reesrvationData['dateOfReservation']); ?>">
+        <input type="hidden" name="firstName" value="<?php echo htmlspecialchars ($reservationData['firstName']); ?>">
+        <input type="hidden" name="lastName" value="<?php echo htmlspecialchars ($reservationData['lastName']); ?>">
+        <input type="hidden" name="emailAddress" value="<?php echo htmlspecialchars ($reservationData['emailAddress']); ?>">
+        <input type="hidden" name="numberOfPeople" value="<?php echo htmlspecialchars ($reservationData['numberOfPeople']); ?>">
+        <input type="hidden" name="dateOfReservation" value="<?php echo htmlspecialchars ($reservationData['dateOfReservation']); ?>">
 
         <label for="timeSlot">Available tables are at:</label>
         <br>
