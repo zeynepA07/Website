@@ -2,16 +2,16 @@
 <html>
     <head>
         <title>Error Page</title>
-        <link rel="stylesheet" href="css/style.css">
-        <script src="js/app.js"></script>
+        <link rel="stylesheet" href="../css/style.css">
+        <script src="../js/app.js"></script>
     </head>
 
 <body>
     <nav>
         <ul>
-            <li><a href="homepage.html">Homepage</a></li>
-            <li><a href="tableReservation.html">Table Reservation</a></li>
-            <li><a href="guestListLogin.html">Guest List Login</a></li>
+            <li><a href="../homepage.html">Homepage</a></li>
+            <li><a href="../tableReservation.html">Table Reservation</a></li>
+            <li><a href="../guestListLogin.html">Guest List Login</a></li>
         </ul>
     </nav>
 

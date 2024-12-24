@@ -14,8 +14,8 @@ $reservationData = $_SESSION['reservationData'];
 <html>
 <head>
     <title>Select Time Slot</title>
-    <link rel="stylesheet" href="css/style.css">
-    <script src="js/app.js"></script>
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../js/app.js"></script>
 </head>
 
 <body>
@@ -46,7 +46,20 @@ $reservationData = $_SESSION['reservationData'];
         <br><br>
 
         <input type="submit" value="Confirm">
+        <br><br>
         </form>
+
+        <footer>
+            <div class="leftDiv">
+                <p><b>Phone Number:</b>
+                <br> 0123456789</p>
+            </div>
+
+            <div class="rightDiv">
+                <p><b>Email Address:</b>
+                <br>ZeynepsRestaurant@gmail.com</p>
+            </div>
+        </footer>
 
 </body>
 </html>

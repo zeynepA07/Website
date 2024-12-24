@@ -24,11 +24,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
                 $_SESSION['availableTimeSlots'] = $availableTimeSlots;
                 $_SESSION['reservationData'] = $_POST;
                 header("Location: selectTimeslot.php");
-                exit;
+                exit();
                
             } catch (PDOException $e){
-                echo "Error: " . $e->getMessage();
+                header("Location: error.php");
+                exit();
             }
+            
         } elseif ($action === 'handleReservation') {
             $firstName = $_POST['firstName'];
             $lastName = $_POST['lastName'];
@@ -65,14 +67,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
                     ':dateOfReservation' => $dateOfReservation,
                     ':timeSlot' => $timeSlot,
                 ]);
-                echo "Reservation successful.";
-            } catch (PDOException $e){
-                echo "Error: " . $e->getMessage();
+                session_start();
+                $_SESSION['reservationData'] = [
+                    'firstName' => $firstName,
+                    'lastName' => $lastName,
+                    'emailAddress' => $emailAddress,
+                    'dateOfReservation' => $dateOfReservation,
+                    'timeSlot' => $timeSlot,
+                ];
+
+                header("Location: confirmation.php");
+                exit();
+                
             }
-        } else {
+            catch (PDOException $e){
+                if($e->getCode() == 23000){
+                    header("Location: duplicateError.php");
+                    exit();
+                }
+                else{
+                    header("Location: error.php");
+                    exit();
+                }
+            }
+        } else{
             echo "Invalid action.";
         }
-    } else {
+    } else{
         echo "Action not specified.";
     }
 }
