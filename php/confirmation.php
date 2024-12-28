@@ -21,13 +21,14 @@ unset($_SESSION['reservationData']);
     <nav>
         <ul>
             <li><a href="../homepage.html">Homepage</a></li>
-            <li><a href="../tableReservation.html">Table Reservation</a></li>
+            <li><a href="tableReservation.php">Table Reservation</a></li>
             <li><a href="../guestListLogin.html">Guest List Login</a></li>
         </ul>
     </nav>
 
-    <h1>Reservation Confirmed</h1>
-    <p>Your reservation for <?php echo htmlspecialchars($reservationData['dateOfReservation']); ?> at <?php echo htmlspecialchars($reservationData['timeSlot']); ?> has been successfully made.</p>
+    <h1>Table Reservation - Confirmation</h1>
+    <p>Your reservation for <?php echo htmlspecialchars($reservationData['dateOfReservation']); ?> at 
+    <?php echo htmlspecialchars(substr($reservationData['timeSlot'], 0, 5)); ?> has been successfully made.</p>
 
     <footer>
         <div class="leftDiv">

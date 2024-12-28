@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Error Page</title>
+        <title>No Time Slots Available</title>
         <link rel="stylesheet" href="../css/style.css">
         <script src="../js/app.js"></script>
     </head>
@@ -15,9 +15,14 @@
         </ul>
     </nav>
 
-    <h1>Error</h1>
+    <h1>Table Reservation - Unavailability</h1>
 
-    <p><?php echo isset($_GET['error_message']) ? htmlspecialchars($_GET['error_message']) : "An error occurred."; ?></p>
+    <p>Sorry, but there are no available time slots for the selected date.
+    <br>
+    Please try a different date or contact us for assistance using the details at the end of the page.</p>
+
+    <a href="tableReservation.php">Take me back to the form.</a>
+    <br>
 
     <footer>
         <div class="leftDiv">
@@ -30,5 +35,6 @@
             <br>ZeynepsRestaurant@gmail.com</p>
         </div>
     </footer>
+
 </body>
 </html>

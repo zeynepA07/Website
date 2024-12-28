@@ -1,24 +1,29 @@
+<?php
+session_start();
+$formData = isset($_SESSION['formData']) ? $_SESSION['formData'] : [];
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
     <title>Zeynep's Restaurant</title>
-    <link rel="stylesheet" href="css/style.css">
-    <script src="js/app.js"></script>
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../js/app.js"></script>
 </head>
 
 <body>
 
     <nav>
         <ul>
-            <li><a href="homepage.html">Homepage</a></li>
-            <li><a class="activePage" href="tableReservation.html">Table Reservation</a></li>
-            <li><a href="guestListLogin.html">Guest List Login</a></li>
+            <li><a href="../homepage.html">Homepage</a></li>
+            <li><a class="activePage" href="tableReservation.php">Table Reservation</a></li>
+            <li><a href="../guestListLogin.html">Guest List Login</a></li>
         </ul>
     </nav>
 
-    <h1>Table Reservation - form</h1>
+    <h1>Table Reservation - Form</h1>
 
-    <form action="php/reservationHandler.php" method="POST">
+    <form action="reservationHandler.php" method="POST">
         <input type="hidden" name="action" value="checkAvailability">
 
         <label for="firstName">First Name*:</label>
@@ -49,20 +54,6 @@
         <input type="submit" value="Check Availability">
         <br><br>
     </form>
-
-
-    <script>
-        document.getElementById("checkAvailabilityBtn").addEventListener("click", function () {
-            document.getElementById("action").value = "checkAvailability";
-            document.getElementById("reservationForm").submit();
-        });
-
-        document.getElementById("confirmReservationBtn").addEventListener("click", function () {
-            document.getElementById("action").value = "handleReservation";
-            document.getElementById("reservationForm").submit();
-        });
-
-    </script>
 
     <footer>
         <div class="leftDiv">
