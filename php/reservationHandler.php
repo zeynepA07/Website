@@ -1,6 +1,8 @@
 <?php
 include 'DBconnection.php';
 
+session_start();
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['action'])) {
         $action = $_POST['action'];
@@ -8,6 +10,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($action === 'checkAvailability'){
 
             $dateOfReservation = $_POST['dateOfReservation'];
+            if (strtotime($dateOfReservation) < strtotime(date("Y-m-d"))){
+                echo "Error: The selected date is in the past. Please choose a valid date.";
+                exit();
+            }
 
             try {
                 $sql = "SELECT timeSlot FROM reservations WHERE dateOfReservation = :dateOfReservation";

@@ -27,27 +27,57 @@ $formData = isset($_SESSION['formData']) ? $_SESSION['formData'] : [];
         <input type="hidden" name="action" value="checkAvailability">
 
         <label for="firstName">First Name*:</label>
-        <input type="text" id="firstName" name="firstName" maxlength="30" required>
+        <input 
+        type="text" 
+        id="firstName" 
+        name="firstName" 
+        maxlength="30" 
+        value="<?= htmlspecialchars($formData['firstName'] ?? '') ?>" 
+        required>
         
         <br><br>
 
         <label for="lastName">Last Name*:</label>
-        <input type="text" id="lastName" name="lastName" maxlength="30" required>
+        <input 
+        type="text" 
+        id="lastName" 
+        name="lastName" 
+        maxlength="30" 
+        value="<?= htmlspecialchars($formData['lastName'] ?? '') ?>"
+        required>
 
         <br><br>
 
         <label for="emailAddress">Email Address*:</label>
-        <input type="'email" id="emailAddress" name="emailAddress" maxlength="320" required>
+        <input 
+        type="'email" 
+        id="emailAddress" 
+        name="emailAddress" 
+        maxlength="320" 
+        value="<?= htmlspecialchars($formData['emailAddress'] ?? '') ?>"
+        required>
 
         <br><br>
 
         <label for="numberOfPeople">Number of People*:</label>
-        <input type="number" id="numberOfPeople" name="numberOfPeople" min="1" max="4" required>
+        <input 
+        type="number" 
+        id="numberOfPeople" 
+        name="numberOfPeople" 
+        min="1" 
+        max="4" 
+        value="<?= htmlspecialchars($formData['numberOfPeople'] ?? '') ?>"
+        required>
 
         <br><br>
 
         <label for="dateOfReservation">Date*:</label>
-        <input type="date" id="dateOfReservation" name="dateOfReservation" required>
+        <input 
+        type="date" 
+        id="dateOfReservation" 
+        name="dateOfReservation" 
+        value="<?= htmlspecialchars($formData['dateOfReservation'] ?? '') ?>"
+        required>
 
         <br><br>
 
