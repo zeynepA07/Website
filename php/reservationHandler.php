@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $dateOfReservation = $_POST['dateOfReservation'];
             if (strtotime($dateOfReservation) < strtotime(date("Y-m-d"))){
-                echo "Error: The selected date is in the past. Please choose a valid date.";
+                header("Location: errorPages/error.php?errorMessage=The selected date is in the past.");
                 exit();
             }
 
@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if (empty($availableTimeSlots)) {
                     session_start();
                     $_SESSION['formData'] = $_POST;
-                    header("Location: noTimeSlotsAvailable.php");
+                    header("Location: errorPages/noTimeSlotsAvailable.php");
                     exit();
                 }
 
@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 exit();
 
             } catch (PDOException $e){
-                header("Location: error.php");
+                header("Location: errorPages/error.php?errorMessage=A database error occurred.");
                 exit();
             }
 
@@ -56,18 +56,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $timeSlot = $_POST['timeSlot'];
 
             if (empty($firstName) || empty($lastName) || empty($emailAddress) || empty($numberOfPeople) || empty($dateOfReservation)) {
-                echo "All fields are required.";
+                header("Location: errorPages/error.php?errorMessage=All fields are required.");
                 exit();
             }
 
             $emailAddress = trim($emailAddress);
             if (!filter_var($emailAddress, FILTER_VALIDATE_EMAIL)) {
-                echo "Invalid email format.";
+                header("Location: errorPages/error.php?errorMessage=Invalid email format.");
                 exit();
             }
 
             if ($numberOfPeople < 1 || $numberOfPeople > 4) {
-                echo "Number of people must be between 1 and 4.";
+                header("Location: errorPages/error.php?errorMessage=The number of people must be between 1 and 4.");
                 exit();
             }
 
@@ -75,12 +75,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $sql = "SELECT COUNT(*) FROM reservations WHERE dateOfReservation = :dateOfReservation AND timeSlot = :timeSlot";
                 $stmt = $conn->prepare($sql);
                 $stmt->execute([':dateOfReservation' => $dateOfReservation, ':timeSlot' => $timeSlot]);
-                $isTimeSlotTaken = $stmt->fetchColumn();
-
-                if ($isTimeSlotTaken) {
-                    echo "This time slot is no longer available. Please go back and select a different time slot.";
-                    exit();
-                }
 
                 $sql = "INSERT INTO reservations (firstName, lastName, emailAddress, numberOfPeople, dateOfReservation, timeSlot)
                         VALUES (:firstName, :lastName, :emailAddress, :numberOfPeople, :dateOfReservation, :timeSlot)";
@@ -112,18 +106,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if ($e->getCode() == 23000) {
                     session_start();
                     $_SESSION['formData'] = $_POST;
-                    header("Location: duplicateError.php");
+                    header("Location: errorPages/duplicateError.php");
                     exit();
                 } else {
-                    header("Location: error.php");
+                    header("Location: errorPages/error.php");
                     exit();
                 }
             }
         } else {
-            echo "Invalid action.";
+            header("Location: errorPages/error.php?errorMessage=Invalid action.");
         }
     } else {
-        echo "Action not specified.";
+        header("Location: errorPages/error.php?errorMessage=Action not specified.");
     }
 }
 ?>
