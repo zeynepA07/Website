@@ -21,7 +21,7 @@
     <br>
     Please try a different date or contact us for assistance using the details at the end of the page.</p>
 
-    <a href="../tableReservation.php">Take me back to the form.</a>
+    <a href="../tableReservation.php">Go back to the form.</a>
     <br><br>
 
     <footer>
