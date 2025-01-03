@@ -10,11 +10,15 @@ try{
     $stmt = $conn->prepare($sql);
     $stmt->execute([':currentDateTime' => $currentDateTime]);
 
-    file_put_contents('cleanup_log.txt', date('Y-m-d H:i:s') . " - Cleanup succesful.\n", FILE_APPEND);
+    $logMessage = "Cleanup ran at $currentDateTime - Deleted expired reservations. \n";
+    file_put_contents('C:/xampp/scripts/cleanup_log.txt', $logMessage, FILE_APPEND);
 }
-catch (PDOException $e){
 
-    file_put_contents('cleanup_log.txt', date('Y-m-d H:i:s') . " - Error: " . $e->getMessage() . "\n", FILE_APPEND);
+    catch(PDOException $e){
+        $logMessage = "Cleanup failed at " . date('Y-m-d H:i:s') . " - Error: " . $e->getMessag() . "\n";
 
-}
+        header ("Location: errorPages/error.php?errorMessage=An error occurred.");
+        exit();
+    }
+
 ?>
