@@ -3,25 +3,41 @@ include 'DBconnection.php';
 session_start();
 
 $_SESSION['timeout'] = time();
-$_SESSION['timeout_duration'] = 3600;
+$_SESSION['timeoutDuration'] = 3600;
 
-if($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $staffUsername = $_POST['staffUsername'];
-    $staffPassword = $_POST['staffPassword'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST'){
+    $staffUsername = trim($_POST['staffUsername']);
+    $staffPassword = trim($_POST['staffPassword']);
 
-    try{
-        $sql = "SELECT * FROM staffAccount WHERE staffUsername = :staffUsername AND staffPassword = :staffPassword";
+    if (empty($staffUsername) || empty($staffPassword)) {
+        header("Location: errorPages/error.php?error_message=All fields are required.");
+        exit();
+    }
+
+    try {
+        $sql = "SELECT staffPassword FROM staffAccount WHERE staffUsername = :staffUsername";
         $stmt = $conn->prepare($sql);
-        $stmt->execute([':staffUsername' => $staffUsername, ':staffPassword' => $staffPassword]);
+        $stmt->execute([':staffUsername' => $staffUsername]);
         $user = $stmt->fetch();
 
-        if($user) {
+        if ($user && password_verify($staffPassword, $user['staffPassword'])) {
             $_SESSION['loggedIn'] = true;
-            echo "Login succesful.";
-        } else{
-            echo "Invalid username or password.";
+            header('Location: viewGuestList.php');
+            exit();
+        } 
+        else{
+            header("Location: errorPages/error.php?error_message=Invalid username or password.");
+            exit();
         }
-    } catch (PDOException $e) {
-        echo "Error: " . $e->getMessage();
+    } 
+
+    catch (PDOException $e) {
+        header("Location: errorPages/error.php?error_message=A database error occurred.");
+        exit();
+    }
 } 
+else {
+    header("Location: ../guestListLogin.html");
+    exit();
 }
+?>

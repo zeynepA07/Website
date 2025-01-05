@@ -1,7 +1,8 @@
 <?php
+$servername = "127.0.0.1";
 $host = 'localhost';
 $username = 'root';
-$password = 'merhaba-ne-yapayim6';
+$password = '';
 $dbname = "restaurantDB";
 
 date_default_timezone_set('Europe/London');
