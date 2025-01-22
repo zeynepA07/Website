@@ -12,5 +12,5 @@ CREATE TABLE reservations (
 
 CREATE TABLE staffAccount (
     staffUsername VARCHAR(30) PRIMARY KEY NOT NULL, -- Username for the staff account
-    staffPassword VARCHAR(30) NOT NULL -- Password for the staff account
+    staffPassword VARCHAR(60) NOT NULL -- Password for the staff account
 );

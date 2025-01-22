@@ -20,13 +20,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
         $stmt->execute([':staffUsername' => $staffUsername]);
         $user = $stmt->fetch();
 
-        if ($user && password_verify($staffPassword, $user['staffPassword'])) {
-            $_SESSION['loggedIn'] = true;
-            header('Location: viewGuestList.php');
-            exit();
-        } 
+        if($user) {
+            if (password_verify($staffPassword, $user['staffPassword'])) {
+                $_SESSION['loggedIn'] = true;
+                header("Location: viewGuestList.php");
+                exit();
+            }
+            else{
+                header ("Location: errorPages/error.php?error_message=Incorrect password.");
+                exit();
+            }
+        }
         else{
-            header("Location: errorPages/error.php?error_message=Invalid username or password.");
+            header("Location: errorPages/error.php?error_message=Username not found.");
             exit();
         }
     } 

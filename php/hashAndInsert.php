@@ -3,7 +3,7 @@ include 'DBconnection.php';
 
 try{
     $staffUsername = 'Username1';
-    $plainPassword = 'gWj5';
+    $plainPassword = 'ghWj5';
 
     $checkSql = "SELECT COUNT(*) FROM staffAccount WHERE staffUsername = :staffUsername";
     $checkStmt = $conn->prepare($checkSql);
