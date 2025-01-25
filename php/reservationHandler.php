@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if (empty($availableTimeSlots)) {
                     session_start();
                     $_SESSION['formData'] = $_POST;
-                    header("Location: errorPages/noTimeSlotsAvailable.php");
+                    header("Location: ../html/errorPages/noTimeSlotsAvailable.html");
                     exit();
                 }
 

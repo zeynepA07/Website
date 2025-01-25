@@ -20,9 +20,9 @@ unset($_SESSION['reservationData']);
 <body>
     <nav>
         <ul>
-            <li><a href="../homepage.html">Homepage</a></li>
+            <li><a href="../html/homepage.html">Homepage</a></li>
             <li><a href="tableReservation.php">Table Reservation</a></li>
-            <li><a href="../guestListLogin.html">Guest List Login</a></li>
+            <li><a href="../html/guestListLogin.html">Guest List Login</a></li>
         </ul>
     </nav>
 

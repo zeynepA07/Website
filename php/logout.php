@@ -1,6 +1,6 @@
 <?php
 session_start();
 session_destroy();
-header("Location: ../guestListLogin.html");
+header("Location: ../html/guestListLogin.html");
 exit();
 ?>
