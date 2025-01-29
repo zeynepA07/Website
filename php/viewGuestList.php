@@ -43,7 +43,7 @@ if(isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] === true){
 
         <h1>Guest List for Today</h1>
         <form action="updateArrivals.php" method="POST">
-            <table border="1">
+            <table>
                 <tr>
                     <th>Name</th>
                     <th>Number of People</th>
