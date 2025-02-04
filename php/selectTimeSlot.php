@@ -29,7 +29,7 @@ $reservationData = $_SESSION['reservationData'];
         <input type="hidden" name="numberOfPeople" value="<?= htmlspecialchars($reservationData['numberOfPeople']) ?>">
         <input type="hidden" name="dateOfReservation" value="<?= htmlspecialchars($reservationData['dateOfReservation']) ?>">
 
-        <label for="timeSlot">Available tables are at:</label><br>
+        <label for="timeSlot">Available tables are at*:</label><br>
         <?php foreach ($availableTimeSlots as $timeSlot): ?>
             <?php $formattedTime = substr($timeSlot, 0, 5); ?>
             <input type="radio" id="<?= $formattedTime ?>" name="timeSlot" value="<?= $timeSlot ?>" required>
@@ -38,7 +38,7 @@ $reservationData = $_SESSION['reservationData'];
 
         <br><br>
         <input type="checkbox" name="consent" required>
-        <label for="consent">I consent to having my details stored until the reservation day.</label><br><br>
+        <label for="consent">I consent to having my details stored until the reservation day.*</label><br><br>
 
         <input type="submit" value="Confirm">
         <br><br>
