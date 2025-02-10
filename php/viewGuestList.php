@@ -13,7 +13,7 @@ $_SESSION['timeout'] = time();
 
 if(isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] === true){
     try{
-        $sql = "SELECT emailAddress, firstName, lastName, numberOfPeople, timeSlot, arrived
+        $sql = "SELECT reservationID, emailAddress, firstName, lastName, numberOfPeople, timeSlot, arrived
                 FROM reservations
                 WHERE dateOfReservation = CURDATE()
                 ORDER BY arrived ASC, timeSlot ASC";
@@ -45,6 +45,7 @@ if(isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] === true){
         <form action="updateArrivals.php" method="POST">
             <table>
                 <tr>
+                    <th>Reservation ID</th>
                     <th>Name</th>
                     <th>Number of People</th>
                     <th>Reservation Time</th>
@@ -53,6 +54,7 @@ if(isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] === true){
                 <?php if(!empty($reservations)){ ?>
                     <?php foreach($reservations as $reservation){ ?>
                         <tr>
+                            <td><?php echo htmlspecialchars($reservation['reservationID']); ?></td>
                             <td><?php echo htmlspecialchars($reservation['firstName'] . ' ' . $reservation['lastName']); ?></td>
                             <td><?php echo htmlspecialchars($reservation['numberOfPeople']); ?></td>
                             <td><?php echo htmlspecialchars($reservation['timeSlot']); ?></td>

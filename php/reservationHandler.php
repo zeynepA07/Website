@@ -82,9 +82,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
 
             try {
-                $sql = "SELECT COUNT(*) FROM reservations WHERE dateOfReservation = :dateOfReservation AND timeSlot = :timeSlot";
+                $sql = "SELECT COUNT(*) FROM reservations WHERE dateOfReservation = :dateOfReservation AND emailAddress = :emailAddress";
                 $stmt = $conn->prepare($sql);
-                $stmt->execute([':dateOfReservation' => $dateOfReservation, ':timeSlot' => $timeSlot]);
+                $stmt->execute([':dateOfReservation' => $dateOfReservation, ':emailAddress' => $emailAddress]);
+                $existingReservations = $stmt->fetchColumn();
+
+                if ($existingReservations > 0){
+                    session_start();
+                    $_SESSION['formData'] = $_POST;
+                    header("Location: errorPages/duplicateError.php");
+                    exit();
+                }
 
                 $sql = "INSERT INTO reservations (firstName, lastName, emailAddress, numberOfPeople, dateOfReservation, timeSlot)
                         VALUES (:firstName, :lastName, :emailAddress, :numberOfPeople, :dateOfReservation, :timeSlot)";
@@ -98,8 +106,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     ':timeSlot' => $timeSlot,
                 ]);
 
+                $lastInsertID = $conn->lastInsertID();
+
                 session_start();
                 $_SESSION['reservationData'] = [
+                    'reservationID' => $lastInsertID,
                     'firstName' => $firstName,
                     'lastName' => $lastName,
                     'emailAddress' => $emailAddress,
@@ -113,15 +124,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 exit();
 
             } catch (PDOException $e) {
-                if ($e->getCode() == 23000) {
-                    session_start();
-                    $_SESSION['formData'] = $_POST;
-                    header("Location: errorPages/duplicateError.php");
-                    exit();
-                } else {
-                    header("Location: errorPages/error.php");
-                    exit();
-                }
+                header("Location: errorPages/error.php?errorMessage=Database error occurred.");
+                exit();
             }
         } else {
             header("Location: errorPages/error.php?errorMessage=Invalid action.");

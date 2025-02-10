@@ -20,7 +20,7 @@ session_start();
     </nav>
 
     <h1>Duplicate Reservation</h1>
-    <p>There is already a reservation under this email address. Please use a different email or contact us using the details at the end of the page for assistance.</p>
+    <p>There is already a reservation under this email address for this date. Please use a different email or contact us using the details at the end of the page for assistance.</p>
     <a href="../tableReservation.php">Go back to the form.</a>
     <br><br>
 

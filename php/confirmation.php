@@ -27,7 +27,8 @@ unset($_SESSION['reservationData']);
     </nav>
 
     <h1>Table Reservation - Confirmation</h1>
-    <p>Your reservation for <?php echo htmlspecialchars($reservationData['dateOfReservation']); ?> at 
+    <p>Your reservation (Booking ID: <?php echo htmlspecialchars($reservationData['reservationID']); ?>) for
+    <?php echo htmlspecialchars($reservationData['dateOfReservation']); ?> at 
     <?php echo htmlspecialchars(substr($reservationData['timeSlot'], 0, 5)); ?> has been successfully made.</p>
 
     <footer>
