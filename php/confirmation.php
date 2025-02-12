@@ -1,12 +1,14 @@
 <?php
 session_start();
+
+//check if reservationData exists, if not, display error message
 if(!isset($_SESSION['reservationData'])){
     echo "No reservation found.";
     exit();
 }
 
+//retrieve reservation data
 $reservationData = $_SESSION['reservationData'];
-unset($_SESSION['reservationData']);
 ?>
 
 <!DOCTYPE html>
@@ -17,6 +19,8 @@ unset($_SESSION['reservationData']);
         <script src="../js/app.js"></script>
     </head>
 
+
+
 <body>
     <nav>
         <ul>
@@ -26,11 +30,16 @@ unset($_SESSION['reservationData']);
         </ul>
     </nav>
 
-    <h1>Table Reservation - Confirmation</h1>
-    <p>Your reservation (Booking ID: <?php echo htmlspecialchars($reservationData['reservationID']); ?>) for
-    <?php echo htmlspecialchars($reservationData['dateOfReservation']); ?> at 
-    <?php echo htmlspecialchars(substr($reservationData['timeSlot'], 0, 5)); ?> has been successfully made.</p>
 
+
+    <!-- Display the reservation id, date, and time slot of the reservation. -->
+    <h1>Table Reservation - Confirmation</h1>
+    <p>Your reservation (Booking ID: <?php echo $reservationData['reservationID']; ?>) for
+    <?php echo $reservationData['dateOfReservation']; ?> at 
+    <?php echo substr($reservationData['timeSlot'], 0, 5); ?> has been successfully made.</p>
+
+
+    
     <footer>
         <div class="leftDiv">
             <p><b>Phone Number:</b>
@@ -42,7 +51,6 @@ unset($_SESSION['reservationData']);
             <br>ZeynepsRestaurant@gmail.com</p>
         </div>
     </footer>
-
 
 </body>
 </html>

@@ -2,15 +2,18 @@
 include 'DBconnection.php';
 session_start();
 
+
+//Handle the session timeout to logout the user when the time is up.
 if (isset($_SESSION['timeout']) && (time() - $_SESSION['timeout']) > $_SESSION['timeoutDuration']){
     session_unset();
     session_destroy();
     header("Location: ../html/errorPages/sessionExpired.html");
     exit();
 }
-
 $_SESSION['timeout'] = time();
 
+
+//Check if the user is logged in, if so, allow access to guest list of the day.
 if(isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] === true){
     try{
         $sql = "SELECT reservationID, emailAddress, firstName, lastName, numberOfPeople, timeSlot, arrived
@@ -20,6 +23,9 @@ if(isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] === true){
         $stmt = $conn->query($sql);
         $reservations = $stmt->fetchAll(PDO::FETCH_ASSOC);
     ?>
+
+
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -31,6 +37,8 @@ if(isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] === true){
         </script>
     </head>
     
+
+
     <body>
         <nav>
             <ul>
@@ -41,8 +49,11 @@ if(isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] === true){
             </ul>
         </nav>
 
+
+
         <h1>Guest List for Today</h1>
         <form action="updateArrivals.php" method="POST">
+            <!-- Create the table to display the guest list. -->
             <table>
                 <tr>
                     <th>Reservation ID</th>
@@ -51,13 +62,16 @@ if(isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] === true){
                     <th>Reservation Time</th>
                     <th>Mark as Arrived</th>
                 </tr>
+                <!-- Check if there are any reservations on that day, if so, display the details. -->
                 <?php if(!empty($reservations)){ ?>
                     <?php foreach($reservations as $reservation){ ?>
                         <tr>
-                            <td><?php echo htmlspecialchars($reservation['reservationID']); ?></td>
-                            <td><?php echo htmlspecialchars($reservation['firstName'] . ' ' . $reservation['lastName']); ?></td>
-                            <td><?php echo htmlspecialchars($reservation['numberOfPeople']); ?></td>
-                            <td><?php echo htmlspecialchars($reservation['timeSlot']); ?></td>
+                            <td><?php echo $reservation['reservationID']; ?></td>
+                            <td><?php echo $reservation['firstName'] . ' ' . $reservation['lastName']; ?></td>
+                            <td><?php echo $reservation['numberOfPeople']; ?></td>
+                            <td><?php echo $reservation['timeSlot']; ?></td>
+
+                            <!-- Check box so that the user can mark customers as arrived. -->
                             <td>
                                 <input type="checkbox"
                                 name="arrived[]"
@@ -65,10 +79,12 @@ if(isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] === true){
                                 <?php echo $reservation['arrived'] ? 'checked disabled' : '';?>>
                             </td>
                         </tr>
+                        
                     <?php } ?>
+                <!-- If there are no reservations that day, display message stating so. -->
                 <?php } else { ?>
                     <tr>
-                        <td colspan="4">No reservations today.</td>
+                        <td colspan="5">No reservations today.</td>
                     </tr>
                 <?php } ?>
             </table>
@@ -76,6 +92,8 @@ if(isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] === true){
             <button type="submit">Update Arrivals</button>
             <br><br>
         </form>
+
+
 
         <footer>
             <div class="leftDiv">
@@ -85,14 +103,21 @@ if(isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] === true){
                 <p><b>Email Address:</b><br>ZeynepsRestaurant@gmail.com</p>
             </div>
         </footer>
+
 </body>
 </html>
+
+
+
+        <!-- Error handling. -->
         <?php
         }
         catch(PDOException $e){
             header("Location: errorPages/error.php?error_message=A database error occurred.");
             exit();
         }}
+
+    //Redirect unauthorised users.
     else{
         header("Location: ../html/guestListLogin.html");
         exit();

@@ -1,7 +1,10 @@
 <?php
 session_start();
+//retrieve data
 $formData = isset($_SESSION['formData']) ? $_SESSION['formData'] : [];
 ?>
+
+
 
 <!DOCTYPE html>
 <html>
@@ -21,18 +24,22 @@ $formData = isset($_SESSION['formData']) ? $_SESSION['formData'] : [];
         </ul>
     </nav>
 
+
+
     <h1>Table Reservation - Form</h1>
 
     <form action="reservationHandler.php" method="POST">
         <input type="hidden" name="action" value="checkAvailability">
 
+        <!-- prefill fields to save user time -->
+        <!-- client-side validation has been done -->
         <label for="firstName">First Name*:</label>
         <input 
         type="text" 
         id="firstName" 
         name="firstName" 
         maxlength="30" 
-        value="<?= htmlspecialchars($formData['firstName'] ?? '') ?>" 
+        value="<?= $formData['firstName'] ?? '' ?>" 
         required>
         
         <br><br>
@@ -43,7 +50,7 @@ $formData = isset($_SESSION['formData']) ? $_SESSION['formData'] : [];
         id="lastName" 
         name="lastName" 
         maxlength="30" 
-        value="<?= htmlspecialchars($formData['lastName'] ?? '') ?>"
+        value="<?= $formData['lastName'] ?? '' ?>"
         required>
 
         <br><br>
@@ -54,7 +61,7 @@ $formData = isset($_SESSION['formData']) ? $_SESSION['formData'] : [];
         id="emailAddress" 
         name="emailAddress" 
         maxlength="320" 
-        value="<?= htmlspecialchars($formData['emailAddress'] ?? '') ?>"
+        value="<?= $formData['emailAddress'] ?? '' ?>"
         required>
 
         <br><br>
@@ -66,7 +73,7 @@ $formData = isset($_SESSION['formData']) ? $_SESSION['formData'] : [];
         name="numberOfPeople" 
         min="1" 
         max="4" 
-        value="<?= htmlspecialchars($formData['numberOfPeople'] ?? '') ?>"
+        value="<?= $formData['numberOfPeople'] ?? '' ?>"
         required>
 
         <br><br>
@@ -76,7 +83,7 @@ $formData = isset($_SESSION['formData']) ? $_SESSION['formData'] : [];
         type="date" 
         id="dateOfReservation" 
         name="dateOfReservation" 
-        value="<?= htmlspecialchars($formData['dateOfReservation'] ?? '') ?>"
+        value="<?= $formData['dateOfReservation'] ?? '' ?>"
         required>
 
         <br><br>
@@ -84,6 +91,8 @@ $formData = isset($_SESSION['formData']) ? $_SESSION['formData'] : [];
         <input type="submit" value="Check Availability">
         <br><br>
     </form>
+
+
 
     <footer>
         <div class="leftDiv">
@@ -96,7 +105,6 @@ $formData = isset($_SESSION['formData']) ? $_SESSION['formData'] : [];
             <br>ZeynepsRestaurant@gmail.com</p>
         </div>
     </footer>
-
 
 </body>
 </html>

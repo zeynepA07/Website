@@ -3,6 +3,7 @@ include 'DBconnection.php';
 
 session_start();
 
+//checks if the submission of form was made using the POST method so that it is only run when it's post.
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['action'])) {
         $action = $_POST['action'];
@@ -10,11 +11,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($action === 'checkAvailability'){
 
             $dateOfReservation = $_POST['dateOfReservation'];
+            //in case the user is somehow able to enter a date in the past, they're taken to the error page.
             if (strtotime($dateOfReservation) < strtotime(date("Y-m-d"))){
                 header("Location: errorPages/error.php?errorMessage=The selected date is in the past.");
                 exit();
             }
 
+            //fetches booked time slots from the database table on the date selected.
             try {
                 $sql = "SELECT timeSlot FROM reservations WHERE dateOfReservation = :dateOfReservation";
                 $stmt = $conn->prepare($sql);
@@ -29,6 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $currentDate = date("Y-m-d");
                 $currentTime = date("H:i:s");
 
+                //filters the available time slots from the unavailable slots.
                 $availableTimeSlots = array_diff($allTimeSlots, $unavailableTimeSlots);
 
 
@@ -38,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     });
                 }
 
-
+                //if there are no available time slots, the data in the form is stored so that when the user returns to the form, their detials are prefilled.
                 if (empty($availableTimeSlots)) {
                     session_start();
                     $_SESSION['formData'] = $_POST;
@@ -46,17 +50,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     exit();
                 }
 
+                //details are stored and the user is sent to select an available time slot
                 session_start();
                 $_SESSION['availableTimeSlots'] = $availableTimeSlots;
                 $_SESSION['reservationData'] = $_POST;
                 header("Location: selectTimeSlot.php");
                 exit();
 
+
+                
+                //errror handling
             } catch (PDOException $e){
                 header("Location: errorPages/error.php?errorMessage=A database error occurred.");
                 exit();
             }
 
+
+            //store the user information in session variables.
         } elseif ($action === 'handleReservation') {
             $firstName = $_POST['firstName'];
             $lastName = $_POST['lastName'];
@@ -65,6 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $dateOfReservation = $_POST['dateOfReservation'];
             $timeSlot = $_POST['timeSlot'];
 
+            //server-side input validation.
             if (empty($firstName) || empty($lastName) || empty($emailAddress) || empty($numberOfPeople) || empty($dateOfReservation)) {
                 header("Location: errorPages/error.php?errorMessage=All fields are required.");
                 exit();
@@ -81,12 +92,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 exit();
             }
 
+
+
             try {
+                //ensures that there can't be two reservations under the same email address on the same day.
                 $sql = "SELECT COUNT(*) FROM reservations WHERE dateOfReservation = :dateOfReservation AND emailAddress = :emailAddress";
                 $stmt = $conn->prepare($sql);
                 $stmt->execute([':dateOfReservation' => $dateOfReservation, ':emailAddress' => $emailAddress]);
                 $existingReservations = $stmt->fetchColumn();
 
+                //if there is a duplicate, the user is taken to the error page.
                 if ($existingReservations > 0){
                     session_start();
                     $_SESSION['formData'] = $_POST;
@@ -94,6 +109,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     exit();
                 }
 
+
+
+                //when there all of the inputs are valid, the details are stored in the database.
                 $sql = "INSERT INTO reservations (firstName, lastName, emailAddress, numberOfPeople, dateOfReservation, timeSlot)
                         VALUES (:firstName, :lastName, :emailAddress, :numberOfPeople, :dateOfReservation, :timeSlot)";
                 $stmt = $conn->prepare($sql);
@@ -106,8 +124,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     ':timeSlot' => $timeSlot,
                 ]);
 
+                //retrieves the reservationID so that it can be displayed on the confirmation page.
                 $lastInsertID = $conn->lastInsertID();
 
+
+                //store details of reservation in a session variable so that it can be displayed on the confirmation page.
                 session_start();
                 $_SESSION['reservationData'] = [
                     'reservationID' => $lastInsertID,
@@ -123,6 +144,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 header("Location: confirmation.php");
                 exit();
 
+
+
+                //error handling
             } catch (PDOException $e) {
                 header("Location: errorPages/error.php?errorMessage=Database error occurred.");
                 exit();

@@ -6,6 +6,8 @@
         <script src="../../js/app.js"></script>
     </head>
 
+
+
 <body>
     <nav>
         <ul>
@@ -15,15 +17,20 @@
         </ul>
     </nav>
 
+
+
     <h1>Error</h1>
 
     <p>
         <?php
+        //if error_message exists, display the error message. If it doesn't exist, display the generic error message.
         echo isset($_GET['error_message']) 
-        ? htmlspecialchars($_GET['error_message']) 
+        ? $_GET['error_message']
         : "An error occurred. Please try again.";
         ?>
     </p>
+
+
 
     <footer>
         <div class="leftDiv">
@@ -36,5 +43,6 @@
             <br>ZeynepsRestaurant@gmail.com</p>
         </div>
     </footer>
+    
 </body>
 </html>
