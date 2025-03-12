@@ -23,9 +23,10 @@ session_start();
 
 
 
-<!-- Inform the user that they cannot proceed with the reservation unless they change the email address or date they've entered. -->
+<!--Inform the user that they cannot proceed with the reservation unless they change the email address or date they've entered.-->
     <h1>Duplicate Reservation</h1>
-    <p>There is already a reservation under this email address for this date. Please use a different email or contact us using the details at the end of the page for assistance.</p>
+    <p>There is already a reservation under this email address for this date. 
+    Please use a different email or contact us using the details at the end of the page for assistance.</p>
     
 <!-- Hyperlink for the user to go back to the form where their details have been stored using a session variables. -->
     <a href="../tableReservation.php">Go back to the form.</a>
