@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $unavailableTimeSlots = array_map('trim', $stmt->fetchAll(PDO::FETCH_COLUMN));
                 $unavailableTimeSlots = array_map('strval', $unavailableTimeSlots);
 
-                $allTimeSlots = ['09:00:00', '10:00:00', '11:00:00', '12:00:00', '13:00:00', '14:00:00', '15:00:00', '16:00:00', '17:00:00'];
+                $allTimeSlots =['09:00:00','10:00:00','11:00:00','12:00:00','13:00:00','14:00:00','15:00:00','16:00:00','17:00:00'];
                 $allTimeSlots = array_map('trim', $allTimeSlots);
                 $allTimeSlots = array_map('strval', $allTimeSlots);
                 
@@ -42,7 +42,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     });
                 }
 
-                //if there are no available time slots, the data in the form is stored so that when the user returns to the form, their detials are prefilled.
+                //if there are no available time slots, the data in the form is stored.
+                //so that when the user returns to the form, their detials are prefilled.
                 if (empty($availableTimeSlots)) {
                     session_start();
                     $_SESSION['formData'] = $_POST;
@@ -76,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $timeSlot = $_POST['timeSlot'];
 
             //server-side input validation.
-            if (empty($firstName) || empty($lastName) || empty($emailAddress) || empty($numberOfPeople) || empty($dateOfReservation)) {
+            if(empty($firstName) || empty($lastName) || empty($emailAddress) || empty($numberOfPeople) || empty($dateOfReservation)){
                 header("Location: errorPages/error.php?errorMessage=All fields are required.");
                 exit();
             }
@@ -96,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             try {
                 //ensures that there can't be two reservations under the same email address on the same day.
-                $sql = "SELECT COUNT(*) FROM reservations WHERE dateOfReservation = :dateOfReservation AND emailAddress = :emailAddress";
+                $sql = "SELECT COUNT(*) FROM reservations WHERE dateOfReservation=:dateOfReservation AND emailAddress=:emailAddress";
                 $stmt = $conn->prepare($sql);
                 $stmt->execute([':dateOfReservation' => $dateOfReservation, ':emailAddress' => $emailAddress]);
                 $existingReservations = $stmt->fetchColumn();
