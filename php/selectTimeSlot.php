@@ -1,7 +1,8 @@
 <?php
 session_start();
 
-//(server-side validation) checks if the user has not selected a date or if there are no available time slots on the date selected, if so, a message is displayed.
+//(server-side validation) checks if the user has not selected a date 
+// or if there are no available time slots on the date selected, if so, a message is displayed.
 if (!isset($_SESSION['availableTimeSlots']) || !isset($_SESSION['reservationData'])) {
     echo "No available time slots. Please try again.";
     exit();
