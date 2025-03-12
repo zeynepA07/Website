@@ -31,7 +31,6 @@ session_start();
     <a href="../tableReservation.php">Go back to the form.</a>
     <br><br>
 
-
     
     <footer>
         <div class="leftDiv">
